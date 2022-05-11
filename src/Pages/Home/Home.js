@@ -2,7 +2,10 @@ import React from 'react';
 import Info from './Info';
 import Service from './Service';
 import Banner from './Banner';
-import Treatment from './Treatment';
+import MakeAppointment from './MakeAppointment';
+import Testimonial from './Testimonial';
+import ContactUs from './ContactUs';
+import Footer from './Footer';
 
 const Home = () => {
     return (
@@ -10,7 +13,10 @@ const Home = () => {
            <Banner></Banner>
            <Info>s</Info>
            <Service></Service>
-           <Treatment></Treatment>
+           <MakeAppointment></MakeAppointment>
+           <Testimonial></Testimonial>
+           <ContactUs></ContactUs>
+           <Footer></Footer>
         </div>
     );
 };
