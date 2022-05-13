@@ -5,7 +5,7 @@ import Banner from './Banner';
 import MakeAppointment from './MakeAppointment';
 import Testimonial from './Testimonial';
 import ContactUs from './ContactUs';
-import Footer from './Footer';
+import Footer from '../Shared/Footer';
 
 const Home = () => {
     return (
