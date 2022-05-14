@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.inti';
@@ -12,14 +12,19 @@ const Login = () => {
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const navigate = useNavigate()
     let errorMassage;
+    
+    useEffect(()=>{
+        if(user || gUser){
+            navigate('/')
+        }
+    },[user])
 
     if (loading || gLoading) {
         return <Loading></Loading>
     }
 
-    if (user || gUser) {
-        navigate('/')
-    }
+   
+
     if (error || gError) {
         errorMassage = <p className='text-red-600'>{error?.message || gError?.message}</p>
     }
@@ -27,6 +32,8 @@ const Login = () => {
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password)
     }
+
+    console.log(user)
 
     return (
         <>
