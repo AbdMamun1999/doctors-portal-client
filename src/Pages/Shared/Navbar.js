@@ -1,14 +1,42 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../firebase.inti';
+import Login from '../Login/Login';
+import Loading from './Loading';
 
 const Navbar = () => {
+    const [user,loading]  = useAuthState(auth)
+    const navigate = useNavigate()
+
+    if(loading){
+        return <Loading></Loading>
+    }
+
+    const handleSignOut = () =>{
+        signOut(auth)
+        navigate('/login')
+        
+    }
+
     const menuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/appoinment'>Appoinment</Link></li>
         <li><Link to='/reviews'>Reviews</Link></li>
         <li><Link to='/contact'>Contact Us</Link></li>
         <li><Link to='/about'>About</Link></li>
-        <li><Link to='/login'>Login</Link></li>
+        <li>
+            {
+                user ?
+                    <button
+                    onClick={handleSignOut}
+                     className='btn btn-ghost normal-case '
+                     >Sign Out</button>
+                    :
+                    <Link to='/login'>Login</Link>
+            }
+        </li>
     </>
     return (
         <div>
