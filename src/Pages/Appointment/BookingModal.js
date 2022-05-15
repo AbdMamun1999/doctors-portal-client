@@ -5,7 +5,7 @@ import auth from '../../firebase.inti';
 
 const BookingModal = ({ treatment, setTreatment, date }) => {
     const [user, loading, error] = useAuthState(auth)
-    const { _id, name, slots } = treatment
+    const {name, slots } = treatment
 
     const handleSubmit = event => {
         event.preventDefault()
