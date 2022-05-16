@@ -13,7 +13,9 @@ const AppointmentBanner = ({date,setDate}) => {
                     <DayPicker
                         mode="single"
                         selected={date}
-                        onSelect={setDate}
+                        // onSelect={setDate} avabe duble click korle error dye
+                        onDayClick={setDate}
+                        // onDayClick kore duble click korle error dey na
                     />
                     <p>You picked </p>
                 </div>
