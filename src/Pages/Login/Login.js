@@ -4,28 +4,31 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.inti';
 import Loading from '../Shared/Loading';
 import { useForm } from "react-hook-form";
-import Footer  from '../Shared/Footer';
+import Footer from '../Shared/Footer';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+    const [token] = useToken(user || gUser)
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
+
     let errorMassage;
-    
-    useEffect(()=>{
-        if(user || gUser){
-            navigate(from,{replace:true})
+
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true })
         }
-    },[user,gUser,from,navigate])
+    }, [token, from, navigate])
 
     if (loading || gLoading) {
         return <Loading></Loading>
     }
 
-   
+
 
     if (error || gError) {
         errorMassage = <p className='text-red-600'>{error?.message || gError?.message}</p>

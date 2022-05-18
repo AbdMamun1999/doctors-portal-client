@@ -3,6 +3,7 @@ import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfil
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.inti';
+import useToken from '../../hooks/useToken';
 import Loading from '../Shared/Loading';
 
 const Register = () => {
@@ -10,30 +11,32 @@ const Register = () => {
     const [createUserWithEmailAndPassword, user, loading, error,] = useCreateUserWithEmailAndPassword(auth);
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const [updateProfile, updating, upError] = useUpdateProfile(auth);
-    const navigate  = useNavigate()
+    const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
+    
+    const [token] = useToken(user || gUser)
 
     let signUpErrorMassage;
-    
-    useEffect(()=>{
-        if(user || gUser){
-            navigate(from,{replace:true})
-        }
-    },[user,gUser,from,navigate])
 
-    if(loading||gLoading){
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true })
+        }
+    }, [token,from, navigate])
+
+    if (loading || gLoading) {
         return <Loading></Loading>
     }
 
-    if(error || gError || upError){
-        signUpErrorMassage = <p className='text-red-600'>{error?.message||gError?.message||upError?.message}</p>
+    if (error || gError || upError) {
+        signUpErrorMassage = <p className='text-red-600'>{error?.message || gError?.message || upError?.message}</p>
     }
 
 
     const onSubmit = async data => {
-       await createUserWithEmailAndPassword(data.email, data.password)
-       await updateProfile({displayName:data.name})
+        await createUserWithEmailAndPassword(data.email, data.password)
+        await updateProfile({ displayName: data.name })
 
     }
     return (
