@@ -8,9 +8,26 @@ import Footer from '../Shared/Footer';
 import useToken from '../../hooks/useToken';
 
 const Login = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
-    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm();
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error
+    ] = useSignInWithEmailAndPassword(auth);
+
+    const [signInWithGoogle,
+        gUser,
+        gLoading,
+        gError
+    ] = useSignInWithGoogle(auth);
+    
     const [token] = useToken(user || gUser)
     const navigate = useNavigate()
     const location = useLocation()

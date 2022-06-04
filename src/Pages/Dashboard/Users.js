@@ -14,7 +14,6 @@ const Users = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
-    console.log(users)
     return (
         <div className="overflow-x-auto">
             <table className="table w-full">

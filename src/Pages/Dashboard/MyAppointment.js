@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.inti';
 
 const MyAppointment = () => {
-    const [appoinments, setAppointments] = useState([])
-    const [user] = useAuthState(auth)
+    const [appointments, setAppointments] = useState([]);
+    const [user] = useAuthState(auth);
     const navigate = useNavigate()
-
 
     useEffect(() => {
         if (user) {
@@ -22,7 +21,7 @@ const MyAppointment = () => {
                     console.log('res', res);
                     if (res.status === 401 || res.status === 403) {
                         signOut(auth);
-                        // localStorage.removeItem('accessToken');
+                        localStorage.removeItem('accessToken');
                         navigate('/');
                     }
                     return res.json()
@@ -33,6 +32,7 @@ const MyAppointment = () => {
                 });
         }
     }, [user])
+
 
     return (
         <div className="overflow-x-auto">
@@ -48,7 +48,7 @@ const MyAppointment = () => {
                 </thead>
                 <tbody>
                     {
-                        appoinments?.map((appointment, index) =>
+                        appointments?.map((appointment, index) =>
                             <tr key={index}>
                                 <th>{index + 1}</th>
                                 <td>{appointment.patientName}</td>

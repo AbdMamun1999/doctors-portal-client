@@ -7,6 +7,7 @@ const UserRow = ({ user, index, refetch }) => {
         fetch(`http://localhost:5000/user/admin/${email}`, {
             method: 'PUT',
             headers: {
+                'content-type':'application/json',
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
             }
         })
@@ -18,7 +19,7 @@ const UserRow = ({ user, index, refetch }) => {
 
             })
             .then(data => {
-                if (data.midifiedCount > 0) {
+                if (data.modifiedCount > 0) {
                     refetch()
                     toast.success('Successfully made an admin')
                 }

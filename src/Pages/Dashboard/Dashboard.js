@@ -5,26 +5,29 @@ import auth from '../../firebase.inti';
 import useAdmin from '../../hooks/useAdmin';
 
 const Dashboard = () => {
-  const [user,] = useAuthState(auth)
+  const [user] = useAuthState(auth)
   const [admin] = useAdmin(user)
- 
+
   return (
     <div className="drawer drawer-mobile">
       <input id="dashboard-sidebar" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         <Outlet></Outlet>
-        {/* <!-- Page content here --> */}
-
-
       </div>
       <div className="drawer-side ">
         <label htmlFor="dashboard-sidebar" className="drawer-overlay"></label>
         <ul className="menu p-4 overflow-y-auto w-80  text-base-content bg-secondary">
-          {/* <!-- Sidebar content here --> */}
-          <li><Link to='/dashboard'>My Appointment</Link></li>
-          <li><Link to='/dashboard/review'>My Review</Link></li>
-          <li><Link to='/dashboard/history'>My History</Link></li>
-          {admin && <li><Link to='/dashboard/users'>Users</Link></li>}
+          {
+            !admin && <>
+              <li><Link to='/dashboard'>My Appointment</Link></li>
+              <li><Link to='/dashboard/review'>My Review</Link></li>
+              <li><Link to='/dashboard/history'>My History</Link></li>
+            </>
+          }
+          {admin && <>
+            <li><Link to='/dashboard/users'>Users</Link></li>
+            <li><Link to='/dashboard/addadoctor'>Add A Doctor</Link></li>
+          </>}
         </ul>
 
       </div>

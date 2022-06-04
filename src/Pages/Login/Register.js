@@ -7,14 +7,32 @@ import useToken from '../../hooks/useToken';
 import Loading from '../Shared/Loading';
 
 const Register = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const [createUserWithEmailAndPassword, user, loading, error,] = useCreateUserWithEmailAndPassword(auth);
-    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-    const [updateProfile, updating, upError] = useUpdateProfile(auth);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm();
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [signInWithGoogle,
+        gUser,
+        gLoading,
+        gError
+    ] = useSignInWithGoogle(auth);
+    const [updateProfile,
+        updating,
+        upError
+    ] = useUpdateProfile(auth);
+    
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
-    
+
     const [token] = useToken(user || gUser)
 
     let signUpErrorMassage;
@@ -23,7 +41,7 @@ const Register = () => {
         if (token) {
             navigate(from, { replace: true })
         }
-    }, [token,from, navigate])
+    }, [token, from, navigate])
 
     if (loading || gLoading) {
         return <Loading></Loading>
